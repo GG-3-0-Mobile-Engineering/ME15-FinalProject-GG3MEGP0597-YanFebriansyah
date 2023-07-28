@@ -11,7 +11,7 @@ import javax.inject.Inject
 class DisasterRepositoryImpl @Inject constructor(
     private val apiService: ApiService
 ) : DisasterRepository {
-    override suspend fun getDisaster(): Response<ResponseData> {
-        return apiService.getReport()
+    override suspend fun getDisaster(periode:String): Response<ResponseData> {
+        return apiService.getReport(periode)
     }
 }

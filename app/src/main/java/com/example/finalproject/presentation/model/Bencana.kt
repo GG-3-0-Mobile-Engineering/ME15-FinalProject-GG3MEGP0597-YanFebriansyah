@@ -7,5 +7,6 @@ data class Bencana(
     val latitude: Double? = null,
     val longitude: Double? = null,
     val codeArea: String? = null,
-    val floodDepth: Int? = null
+    val floodDepth: Int? = null,
+    val time:String? = null
 )

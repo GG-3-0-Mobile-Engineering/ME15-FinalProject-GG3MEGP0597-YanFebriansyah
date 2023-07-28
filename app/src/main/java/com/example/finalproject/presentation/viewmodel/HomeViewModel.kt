@@ -21,15 +21,17 @@ class HomeViewModel @Inject constructor(
         get() = uiData
 
     init {
-        getData()
+//        2 minggu
+        val periode = "1209600"
+        getData(periode)
     }
 
 
-    fun getData() {
+    fun getData(periode: String) {
         viewModelScope.launch {
             try {
                 uiData.value = HomeState(isLoading = true)
-                val response = repository.getDisaster()
+                val response = repository.getDisaster(periode)
                 if (response.isSuccessful) {
                     uiData.value = HomeState(disasterData = response.body(), isLoading = false)
                 }
