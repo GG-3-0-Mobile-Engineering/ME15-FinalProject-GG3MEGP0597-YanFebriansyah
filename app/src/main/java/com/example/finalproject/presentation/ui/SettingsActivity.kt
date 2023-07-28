@@ -1,9 +1,8 @@
 package com.example.finalproject.presentation.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
-import com.example.finalproject.R
 import com.example.finalproject.databinding.ActivitySettingsBinding
 import com.example.finalproject.utils.AppPreferences
 

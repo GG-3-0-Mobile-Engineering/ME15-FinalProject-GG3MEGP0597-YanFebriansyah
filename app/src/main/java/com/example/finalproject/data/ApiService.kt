@@ -7,9 +7,6 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface ApiService {
-    //    @GET("reports?timeperiod=604800")
-//    suspend fun getReport(): Response<ResponseData>
-
     @GET("reports")
     suspend fun getReport(@Query("timeperiod") timeperiod: String): Response<ResponseData>
 }
