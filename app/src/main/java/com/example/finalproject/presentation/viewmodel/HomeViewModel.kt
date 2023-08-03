@@ -27,8 +27,6 @@ class HomeViewModel @Inject constructor(
     val filteredBencanaList: StateFlow<List<Bencana>> = _filteredBencanaList
 
 
-
-
     private val uiData = MutableLiveData<HomeState>(HomeState(isLoading = true))
     val getData: LiveData<HomeState>
         get() = uiData
@@ -44,10 +42,8 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             try {
                 uiData.value = HomeState(isLoading = true)
-                val response = repository.getDisaster(periode)
-                if (response.isSuccessful) {
-                    uiData.value = HomeState(disasterData = response.body(), isLoading = false)
-                }
+                val response = useCase.invoke(periode)
+                uiData.value = HomeState(response, isLoading = false)
             } catch (e: Exception) {
                 uiData.value = HomeState(error(e.message.toString()), isLoading = true)
             }
@@ -57,11 +53,11 @@ class HomeViewModel @Inject constructor(
     fun filterData(periode: String, filter: String) {
         viewModelScope.launch {
             try {
-                uiData.value = HomeState(isLoading = true)
+//                uiData.value = HomeState(isLoading = true)
                 val response = filterDisasterUseCase.invoke(periode, filter)
                 _filteredBencanaList.value = response
             } catch (e: Exception) {
-                uiData.value = HomeState(error(e.message.toString()), isLoading = true)
+//                uiData.value = HomeState(error(e.message.toString()), isLoading = true)
             }
         }
     }

@@ -17,7 +17,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.finalproject.R
-import com.example.finalproject.data.model.getGeometriesAsBencanaProperties
 import com.example.finalproject.data.notification.NotificationFloodDepth
 import com.example.finalproject.databinding.ActivityMainBinding
 import com.example.finalproject.presentation.model.Bencana
@@ -51,7 +50,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, AdapterFilter.Filt
     private val viewModel by viewModels<HomeViewModel>()
 
     private var mapReady = false
-    private var mapLayoutReady = false // Tambahkan variabel ini
+    private var mapLayoutReady = false
 
 
     @SuppressLint("NotifyDataSetChanged")
@@ -66,8 +65,8 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, AdapterFilter.Filt
             return
         }
 
-        viewModel.filterData("1209600","ID-JK")
-        filterData()
+//        viewModel.filterData("1209600","ID-JK")
+//        filterData()
 
 
 //      observeData
@@ -200,15 +199,12 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, AdapterFilter.Filt
             } else {
                 binding.progressBar3.visibility = View.GONE
             }
-            val result = data.disasterData?.result?.objects?.output?.geometries
             try {
-                if (result != null) {
-                    val list = data.disasterData.getGeometriesAsBencanaProperties()
+                val dataBencana = data.disasterData
+                if (dataBencana.isNotEmpty()) {
                     listOfBencana.clear()
-                    if (list != null) {
-                        listOfBencana.addAll(list)
-                        backupOfBencana.addAll(list)
-                    }
+                    listOfBencana.addAll(dataBencana)
+                    backupOfBencana.addAll(dataBencana)
                     adapterBencana.notifyDataSetChanged()
                 }
 //              show map
@@ -224,6 +220,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, AdapterFilter.Filt
         val autoCompleteAdapter =
             ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, provinceName)
         (binding.edtSearch as MaterialAutoCompleteTextView).setAdapter(autoCompleteAdapter)
+
         searchViewAction()
 
     }
@@ -395,14 +392,13 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, AdapterFilter.Filt
     }
 
 
-
-
     //    new code use for filter data use viewmodel
-    @SuppressLint("NotifyDataSetChanged")
     fun filterData() {
         lifecycleScope.launch {
             viewModel.filteredBencanaList.collect {
-
+                listOfBencana.clear()
+                listOfBencana.addAll(it)
+                adapterBencana.notifyDataSetChanged()
                 Log.d("bencana", it.toString())
             }
         }
