@@ -3,7 +3,6 @@ package com.example.finalproject.presentation.ui
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -12,16 +11,11 @@ import android.view.View
 import android.view.ViewTreeObserver
 import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
-import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.widget.addTextChangedListener
-import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView.HORIZONTAL
-import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.example.finalproject.R
 import com.example.finalproject.data.model.getGeometriesAsBencanaProperties
 import com.example.finalproject.data.notification.NotificationFloodDepth
@@ -29,11 +23,9 @@ import com.example.finalproject.databinding.ActivityMainBinding
 import com.example.finalproject.presentation.model.Bencana
 import com.example.finalproject.presentation.ui.adapter.AdapterBencana
 import com.example.finalproject.presentation.ui.adapter.AdapterFilter
-import com.example.finalproject.presentation.viewmodel.HomeState
 import com.example.finalproject.presentation.viewmodel.HomeViewModel
 import com.example.finalproject.utils.CheckConnection
 import com.example.finalproject.utils.Constants
-import com.example.finalproject.utils.Resource
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -44,11 +36,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.observeOn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import kotlin.math.log
 
 
 @AndroidEntryPoint
@@ -58,7 +46,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, AdapterFilter.Filt
     private lateinit var adapterBencana: AdapterBencana
     private lateinit var binding: ActivityMainBinding
     private lateinit var mMap: GoogleMap
-
     var listOfBencana: MutableList<Bencana> = mutableListOf()
     var backupOfBencana: MutableList<Bencana> = mutableListOf()
     private val viewModel by viewModels<HomeViewModel>()
@@ -78,6 +65,11 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, AdapterFilter.Filt
             CheckConnection.showInternetMessage(this)
             return
         }
+
+        viewModel.filterData("1209600","ID-JK")
+        filterData()
+
+
 //      observeData
         observeData()
 
@@ -239,6 +231,8 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, AdapterFilter.Filt
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onFilterClicked(type: String) {
+//        viewModel.filterData("1209600", type)
+//        filterData()
         if (backupOfBencana.isNotEmpty()) {
             if (type == "all") {
                 listOfBencana.clear()
@@ -257,12 +251,10 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, AdapterFilter.Filt
     }
 
     private fun markerMap() {
-
         if (!mapReady || !mapLayoutReady) {
             // Peta belum siap atau layout belum terjadi, kembalikan saja
             return
         }
-
         mMap.clear()
         if (listOfBencana.isNotEmpty()) {
             for (location in listOfBencana) {
@@ -399,6 +391,20 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, AdapterFilter.Filt
             },\"total ${filteredLocations.size} tempat"
         } else {
             ""
+        }
+    }
+
+
+
+
+    //    new code use for filter data use viewmodel
+    @SuppressLint("NotifyDataSetChanged")
+    fun filterData() {
+        lifecycleScope.launch {
+            viewModel.filteredBencanaList.collect {
+
+                Log.d("bencana", it.toString())
+            }
         }
     }
 }
