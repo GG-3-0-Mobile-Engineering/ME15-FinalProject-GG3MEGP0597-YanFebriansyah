@@ -52,7 +52,7 @@
                     android:id="@+id/searchView"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:hint="Search..."
+                    android:hint="@string/search"
                     android:layout_gravity="center"
                     app:boxBackgroundMode="none"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -133,7 +133,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
-            android:text="Informasi Bencana Terkini"
+            android:text="@string/informasi_bencana_terkini"
             android:textSize="20sp"
             android:textStyle="bold" />
 

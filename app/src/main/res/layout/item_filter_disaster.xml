@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:textColor="?attr/colorOnPrimary"
             android:layout_gravity="center"
-            android:text="example"
+            android:text="@string/example"
            />
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

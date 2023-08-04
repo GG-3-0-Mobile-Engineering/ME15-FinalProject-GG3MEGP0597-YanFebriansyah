@@ -52,7 +52,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, AdapterFilter.Filt
     private var mapReady = false
     private var mapLayoutReady = false
 
-
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,7 +64,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, AdapterFilter.Filt
             return
         }
 
-//        viewModel.filterData("1209600","ID-JK")
+//        viewModel.filterData("1209600", "")
 //        filterData()
 
 
@@ -83,15 +82,11 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, AdapterFilter.Filt
 //        bottomSheet
         bottomSheet()
 
-
 //        Settings
         moveToSettings()
 
 //        serachVIew
         searchViewAction()
-
-//        checkAndShowFloodAlertNotification(this)
-//        NotificationFloodDepth.showNotification(this,"tes","oke tes tes")
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
@@ -129,8 +124,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, AdapterFilter.Filt
         binding.appbar.rvBencana.setHasFixedSize(true)
         binding.appbar.rvBencana.layoutManager = LinearLayoutManager(applicationContext)
         binding.appbar.rvBencana.adapter = adapterBencana
-
-
     }
 
 
@@ -230,6 +223,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, AdapterFilter.Filt
     override fun onFilterClicked(type: String) {
 //        viewModel.filterData("1209600", type)
 //        filterData()
+
         if (backupOfBencana.isNotEmpty()) {
             if (type == "all") {
                 listOfBencana.clear()
@@ -376,7 +370,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, AdapterFilter.Filt
             }
         }
 
-//        hapus duplikasi id daerajh
+//        hapus duplikasi id daerah
         val distinctLocations = filteredLocations.distinct()
 
         return if (filteredLocations.isNotEmpty()) {
@@ -396,9 +390,11 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, AdapterFilter.Filt
     fun filterData() {
         lifecycleScope.launch {
             viewModel.filteredBencanaList.collect {
+                adapterBencana = AdapterBencana(backupOfBencana as ArrayList<Bencana>)
                 listOfBencana.clear()
                 listOfBencana.addAll(it)
                 adapterBencana.notifyDataSetChanged()
+                markerMap()
                 Log.d("bencana", it.toString())
             }
         }

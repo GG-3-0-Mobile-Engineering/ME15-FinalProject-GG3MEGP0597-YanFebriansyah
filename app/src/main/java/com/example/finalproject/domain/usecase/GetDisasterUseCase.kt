@@ -20,6 +20,7 @@ class GetDisasterUseCase(
                 listOfBencana.addAll(dataSementara!!)
             }
         }
+
         return listOfBencana
     }
 }

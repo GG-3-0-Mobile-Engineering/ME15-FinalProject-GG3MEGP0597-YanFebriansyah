@@ -6,4 +6,7 @@
     <string name="dark_mode">Dark Mode</string>
     <string name="enable_dark_mode">Enable Dark Mode</string>
     <string name="textview">TextView</string>
+    <string name="search">Search...</string>
+    <string name="informasi_bencana_terkini">Informasi Bencana Terkini</string>
+    <string name="example">example</string>
 </resources>

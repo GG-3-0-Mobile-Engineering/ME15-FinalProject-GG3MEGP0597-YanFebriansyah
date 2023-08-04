@@ -10,9 +10,12 @@ import com.example.finalproject.domain.usecase.FilterDisasterUseCase
 import com.example.finalproject.domain.usecase.GetDisasterUseCase
 import com.example.finalproject.presentation.model.Bencana
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -54,7 +57,9 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             try {
 //                uiData.value = HomeState(isLoading = true)
-                val response = filterDisasterUseCase.invoke(periode, filter)
+                val response = withContext(Dispatchers.IO) {
+                    filterDisasterUseCase.invoke(periode, filter)
+                }
                 _filteredBencanaList.value = response
             } catch (e: Exception) {
 //                uiData.value = HomeState(error(e.message.toString()), isLoading = true)

@@ -4,7 +4,6 @@ import android.util.Log
 import com.example.finalproject.data.model.getGeometriesAsBencanaProperties
 import com.example.finalproject.domain.repository.DisasterRepository
 import com.example.finalproject.presentation.model.Bencana
-import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
 class FilterDisasterUseCase @Inject constructor(
@@ -30,7 +29,6 @@ class FilterDisasterUseCase @Inject constructor(
         } catch (e: Exception) {
             Log.d("filter", e.message.toString())
         }
-
         return listOfBencana
     }
 }
