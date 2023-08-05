@@ -1,5 +1,6 @@
 package com.example.finalproject.presentation.ui
 
+import TimePickerHelper
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
@@ -62,6 +63,15 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, AdapterFilter.Filt
         if (!CheckConnection.isInternetAvailable(this)) {
             CheckConnection.showInternetMessage(this)
             return
+        }
+
+        binding.btnTimePeriode.setOnClickListener {
+            val timePickerHelper = TimePickerHelper(this)
+            timePickerHelper.showTimePeriodPicker { selectedWeeks ->
+                // Panggil fungsi untuk mengambil data dari service dengan time periode yang dipilih
+                viewModel.getData(selectedWeeks.toString())
+                observeData()
+            }
         }
 
 //        viewModel.filterData("1209600", "")

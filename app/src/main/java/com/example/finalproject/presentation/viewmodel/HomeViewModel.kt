@@ -35,7 +35,6 @@ class HomeViewModel @Inject constructor(
         get() = uiData
 
     init {
-//        2 minggu
         val periode = "1209600"
         getData(periode)
     }

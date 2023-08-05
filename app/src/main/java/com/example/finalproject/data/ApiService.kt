@@ -9,4 +9,5 @@ import retrofit2.http.Query
 interface ApiService {
     @GET("reports")
     suspend fun getReport(@Query("timeperiod") timeperiod: String): Response<ResponseData>
+
 }
