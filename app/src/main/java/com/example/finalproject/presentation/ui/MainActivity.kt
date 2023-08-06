@@ -74,10 +74,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, AdapterFilter.Filt
             }
         }
 
-//        viewModel.filterData("1209600", "")
-//        filterData()
-
-
 //      observeData
         observeData()
 
@@ -103,7 +99,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, AdapterFilter.Filt
         mMap = googleMap
         mapReady = true
         markerMap()
-
         // Tambahkan kode untuk memantau perubahan layout pada peta, code ini untuk solusi error ketika saya mencoba switch mode niht/light
         val mapView = findViewById<View>(R.id.map)
         mapView.viewTreeObserver.addOnGlobalLayoutListener(object :
@@ -225,15 +220,11 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, AdapterFilter.Filt
         (binding.edtSearch as MaterialAutoCompleteTextView).setAdapter(autoCompleteAdapter)
 
         searchViewAction()
-
     }
 
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onFilterClicked(type: String) {
-//        viewModel.filterData("1209600", type)
-//        filterData()
-
         if (backupOfBencana.isNotEmpty()) {
             if (type == "all") {
                 listOfBencana.clear()
@@ -333,7 +324,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, AdapterFilter.Filt
                     entry.key.toLowerCase() == searchLowerCase
                 }?.value
                 val filteredList = if (codeArea != null) {
-                    // Jika kode area tidak null, filter berdasarkan kode area (codeArea)
+                    // Jika kode area tidak null, filter berdasarkan kode area
                     backupOfBencana.filter { bencana ->
                         bencana.codeArea.equals(codeArea, ignoreCase = true)
                     }
@@ -388,25 +379,9 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, AdapterFilter.Filt
                 distinctLocations.joinToString(
                     ","
                 )
-
             },\"total ${filteredLocations.size} tempat"
         } else {
             ""
-        }
-    }
-
-
-    //    new code use for filter data use viewmodel
-    fun filterData() {
-        lifecycleScope.launch {
-            viewModel.filteredBencanaList.collect {
-                adapterBencana = AdapterBencana(backupOfBencana as ArrayList<Bencana>)
-                listOfBencana.clear()
-                listOfBencana.addAll(it)
-                adapterBencana.notifyDataSetChanged()
-                markerMap()
-                Log.d("bencana", it.toString())
-            }
         }
     }
 }

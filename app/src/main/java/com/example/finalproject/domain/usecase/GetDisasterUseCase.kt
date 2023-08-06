@@ -1,11 +1,9 @@
 package com.example.finalproject.domain.usecase
 
-import com.example.finalproject.data.model.ResponseData
 import com.example.finalproject.data.model.getGeometriesAsBencanaProperties
 import com.example.finalproject.domain.repository.DisasterRepository
 import com.example.finalproject.presentation.model.Bencana
 
-// not used still learn clean arhcitecture
 
 class GetDisasterUseCase(
     private val repository: DisasterRepository
