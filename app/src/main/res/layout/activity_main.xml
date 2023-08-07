@@ -101,7 +101,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_vertical"
-                    android:src="@drawable/baseline_close_24"
+                    android:src="@drawable/ic_delete"
                     android:visibility="invisible"
                     app:layout_constraintBottom_toBottomOf="@+id/btn_settings"
                     app:layout_constraintEnd_toStartOf="@+id/btn_settings"

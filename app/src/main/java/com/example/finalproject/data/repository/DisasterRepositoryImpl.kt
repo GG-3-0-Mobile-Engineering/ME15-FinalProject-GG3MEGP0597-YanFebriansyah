@@ -18,8 +18,5 @@ class DisasterRepositoryImpl @Inject constructor(
         return apiService.getReport(periode)
     }
 
-    override suspend fun filterDisaster(data: List<Bencana>): List<Bencana> {
-        return data
-    }
 
 }

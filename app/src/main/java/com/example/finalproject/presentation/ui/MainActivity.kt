@@ -78,6 +78,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, AdapterFilter.Filt
             }
         }
 
+
 //      observeData
         observeData()
 
@@ -99,23 +100,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, AdapterFilter.Filt
         searchViewAction()
     }
 
-    override fun onMapReady(googleMap: GoogleMap) {
-        mMap = googleMap
-        mapReady = true
-        markerMap()
-        // Tambahkan kode untuk memantau perubahan layout pada peta, code ini untuk solusi error ketika saya mencoba switch mode niht/light
-        val mapView = findViewById<View>(R.id.map)
-        mapView.viewTreeObserver.addOnGlobalLayoutListener(object :
-            ViewTreeObserver.OnGlobalLayoutListener {
-            override fun onGlobalLayout() {
-                // Layout peta sudah terjadi
-                mapLayoutReady = true
-                markerMap() // Panggil markerMap() hanya jika layout sudah terjadi
-                mapView.viewTreeObserver.removeOnGlobalLayoutListener(this)
-            }
-        })
-    }
-
     private fun filterButton() {
         adapterFilter = AdapterFilter(this)
         binding.rvFilter.setHasFixedSize(true)
@@ -135,10 +119,60 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, AdapterFilter.Filt
         binding.appbar.rvBencana.adapter = adapterBencana
     }
 
+    override fun onMapReady(googleMap: GoogleMap) {
+        mMap = googleMap
+        mapReady = true
+        markerMap()
+        // Tambahkan kode untuk memantau perubahan layout pada peta, code ini untuk solusi error ketika saya mencoba switch mode niht/light
+        val mapView = findViewById<View>(R.id.map)
+        mapView.viewTreeObserver.addOnGlobalLayoutListener(object :
+            ViewTreeObserver.OnGlobalLayoutListener {
+            override fun onGlobalLayout() {
+                // Layout peta sudah terjadi
+                mapLayoutReady = true
+                markerMap() // Panggil markerMap() hanya jika layout sudah terjadi
+                mapView.viewTreeObserver.removeOnGlobalLayoutListener(this)
+            }
+        })
+    }
 
     private fun showMap() {
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
+    }
+    private fun markerMap() {
+        if (!mapReady || !mapLayoutReady) {
+            // Peta belum siap atau layout belum terjadi, kembalikan saja
+            return
+        }
+        mMap.clear()
+        if (listOfBencana.isNotEmpty()) {
+            for (location in listOfBencana) {
+                val latitude = location.latitude
+                val longitude = location.longitude
+
+//                check if valid
+                if (latitude != null && longitude != null) {
+                    val locationLatLang = LatLng(latitude, longitude)
+                    mMap.addMarker(MarkerOptions().position(locationLatLang).title(location.title))
+                }
+            }
+            val builder = LatLngBounds.builder()
+            for (location in listOfBencana) {
+                val latitude = location.latitude
+                val longitude = location.longitude
+
+                // Check if latitude and longitude are valid
+                if (latitude != null && longitude != null) {
+                    val locationLatLng = LatLng(latitude, longitude)
+                    builder.include(locationLatLng)
+                }
+            }
+            val bounds = builder.build()
+            val padding = 100 // Padding for the bounds (optional)
+            val cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, padding)
+            mMap.animateCamera(cameraUpdate)
+        }
     }
 
     private fun bottomSheet() {
@@ -207,24 +241,20 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, AdapterFilter.Filt
                 }
 //              show map
                 showMap()
-                checkAndShowFloodAlertNotification(this)
+                viewModel.checkNotification(this, backupOfBencana)
             } catch (e: Exception) {
                 Toast.makeText(this, "${e.message}", Toast.LENGTH_SHORT).show()
             }
         }
 
 //        set AutoComplete DropDown
-        val provinceName = Constants.provinceMap.keys.toList()
-        val autoCompleteAdapter =
-            ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, provinceName)
-        (binding.edtSearch as MaterialAutoCompleteTextView).setAdapter(autoCompleteAdapter)
-
         searchViewAction()
     }
 
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onFilterClicked(type: String) {
+
         if (backupOfBencana.isNotEmpty()) {
             if (type == "all") {
                 listOfBencana.clear()
@@ -242,43 +272,14 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, AdapterFilter.Filt
         }
     }
 
-    private fun markerMap() {
-        if (!mapReady || !mapLayoutReady) {
-            // Peta belum siap atau layout belum terjadi, kembalikan saja
-            return
-        }
-        mMap.clear()
-        if (listOfBencana.isNotEmpty()) {
-            for (location in listOfBencana) {
-                val latitude = location.latitude
-                val longitude = location.longitude
-
-//                check if valid
-                if (latitude != null && longitude != null) {
-                    val locationLatLang = LatLng(latitude, longitude)
-                    mMap.addMarker(MarkerOptions().position(locationLatLang).title(location.title))
-                }
-            }
-            val builder = LatLngBounds.builder()
-            for (location in listOfBencana) {
-                val latitude = location.latitude
-                val longitude = location.longitude
-
-                // Check if latitude and longitude are valid
-                if (latitude != null && longitude != null) {
-                    val locationLatLng = LatLng(latitude, longitude)
-                    builder.include(locationLatLng)
-                }
-            }
-            val bounds = builder.build()
-            val padding = 100 // Padding for the bounds (optional)
-            val cameraUpdate = CameraUpdateFactory.newLatLngBounds(bounds, padding)
-            mMap.animateCamera(cameraUpdate)
-        }
-    }
-
 
     private fun searchViewAction() {
+//        autoComplete
+        val provinceName = Constants.provinceMap.keys.toList()
+        val autoCompleteAdapter =
+            ArrayAdapter(this, android.R.layout.simple_dropdown_item_1line, provinceName)
+        (binding.edtSearch as MaterialAutoCompleteTextView).setAdapter(autoCompleteAdapter)
+
         binding.edtSearch.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 search(binding.edtSearch.text.toString())
@@ -329,38 +330,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, AdapterFilter.Filt
             val mapFragment =
                 supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
             mapFragment.getMapAsync(this)
-        }
-    }
-
-
-    private fun checkAndShowFloodAlertNotification(context: Context) {
-        val notificationMessage = buildNotificationMessage()
-        if (notificationMessage.isNotBlank()) {
-            NotificationFloodDepth.showNotification(context, "Flood Alert", notificationMessage)
-        }
-    }
-
-    private fun buildNotificationMessage(): String {
-        val filteredLocations = mutableListOf<String>()
-        for (i in listOfBencana) {
-            val getDepth = i.floodDepth
-            val message = i.codeArea
-            if (getDepth != null && getDepth > 100) {
-                filteredLocations.add(message ?: "")
-            }
-        }
-
-//        hapus duplikasi id daerah
-        val distinctLocations = filteredLocations.distinct()
-
-        return if (filteredLocations.isNotEmpty()) {
-            "Berikut adalah ID daerah yang terdampak banjir dengan flood depth > 100: \n${
-                distinctLocations.joinToString(
-                    ","
-                )
-            },\"total ${filteredLocations.size} tempat"
-        } else {
-            ""
         }
     }
 }

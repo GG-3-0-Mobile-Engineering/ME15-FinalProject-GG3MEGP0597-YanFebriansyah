@@ -7,8 +7,4 @@ import retrofit2.Response
 
 interface DisasterRepository {
     suspend fun getDisaster(periode:String): Response<ResponseData>
-    suspend fun filterDisaster(data:List<Bencana>):List<Bencana>
-
-
-
 }

@@ -10,8 +10,10 @@
     <style name="Theme.FinalProject" parent="Base.Theme.FinalProject" />
     <style name="App.TextInputLayout" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your attributes here -->
-        <item name="android:colorPrimary">@color/black</item>
-        <item name="indicatorColor">@color/black</item>
+        <item name="colorPrimary">@color/white</item>
+        <item name="colorSurface">@color/white</item>
+        <item name="colorOnSurface">@color/white</item>
+        <item name="indicatorColor">@color/white</item>
         <item name="boxBackgroundMode">outline</item>
         <item name="boxStrokeColor">@color/green</item>
         <!-- Add more attributes as needed -->
