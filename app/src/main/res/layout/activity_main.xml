@@ -51,34 +51,35 @@
                 <ImageView
                     android:id="@+id/btnTimePeriode"
                     android:layout_width="50dp"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintEnd_toStartOf="@id/searchView"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
+                    android:layout_height="50dp"
                     android:src="@drawable/time_periode"
-                    android:layout_height="50dp"/>
-
-
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/searchView"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:id="@+id/searchView"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:hint="@string/search"
                     android:layout_gravity="center"
-                    app:boxBackgroundMode="none"
+                    android:hint="@string/search"
+                    android:theme="@style/App.TextInputLayout"
+                    app:boxBackgroundMode="outline"
+                    app:boxStrokeColor="@color/green"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/btn_settings"
                     app:layout_constraintStart_toEndOf="@id/btnTimePeriode"
                     app:layout_constraintTop_toTopOf="parent">
+
                     <AutoCompleteTextView
                         android:id="@+id/edt_search"
                         android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_gravity="center_vertical"
                         android:padding="12dp"
-                        android:cursorVisible="true"
-                        android:layout_height="match_parent"
                         android:singleLine="true"
+                        android:textColorHighlight="@color/green"
                         tools:ignore="LabelFor" />
                 </com.google.android.material.textfield.TextInputLayout>
 

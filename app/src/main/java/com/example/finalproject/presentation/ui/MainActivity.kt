@@ -12,6 +12,7 @@ import android.view.View
 import android.view.ViewTreeObserver
 import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -50,6 +51,8 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, AdapterFilter.Filt
     var listOfBencana: MutableList<Bencana> = mutableListOf()
     var backupOfBencana: MutableList<Bencana> = mutableListOf()
     private val viewModel by viewModels<HomeViewModel>()
+
+    private lateinit var autoCompleteAdapter: ArrayAdapter<String>
 
     private var mapReady = false
     private var mapLayoutReady = false
@@ -150,10 +153,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, AdapterFilter.Filt
                     BottomSheetBehavior.STATE_EXPANDED -> {
                         binding.appbar.bottomAppbar.visibility = View.VISIBLE
                         binding.sheet.visibility = View.GONE
-                    }
-
-                    BottomSheetBehavior.STATE_HIDDEN -> {
-                        binding.appbar.bottomAppbar.visibility = View.GONE
                     }
 
                     else -> {
@@ -311,7 +310,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, AdapterFilter.Filt
     @SuppressLint("NotifyDataSetChanged")
     private fun search(search: String) {
         lifecycleScope.launch {
-            viewModel.searchData(search, backupOfBencana).collect{result ->
+            viewModel.searchData(search, backupOfBencana).collect { result ->
                 listOfBencana.clear()
                 listOfBencana.addAll(result)
                 adapterBencana.notifyDataSetChanged()
