@@ -18,6 +18,7 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -58,21 +59,6 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun filterData(periode: String, filter: String) {
-        viewModelScope.launch {
-            try {
-//                uiData.value = HomeState(isLoading = true)
-                val response = withContext(Dispatchers.IO) {
-                    filterDisasterUseCase.invoke(periode, filter)
-                }
-                _filteredBencanaList.value = response
-            } catch (e: Exception) {
-//                uiData.value = HomeState(error(e.message.toString()), isLoading = true)
-            }
-        }
-    }
-
-
     fun searchData(keyword: String, allDisaster: List<Bencana>): Flow<List<Bencana>> {
         return flow {
             val result = searchDisasterUseCase.invoke(allDisaster, keyword)
@@ -83,6 +69,14 @@ class HomeViewModel @Inject constructor(
     fun checkNotification(context: Context, bencana: List<Bencana>) {
         viewModelScope.launch {
             notificationUseCase.checkAndShowFloodAlertNotification(context, bencana)
+        }
+    }
+
+     fun filterTypeDisaster(bencana: List<Bencana>, type: String){
+        viewModelScope.launch {
+           val result =  filterDisasterUseCase.invoke(bencana, type).collect{
+               _filteredBencanaList.value = it
+           }
         }
     }
 }

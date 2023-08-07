@@ -37,6 +37,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
@@ -140,6 +141,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, AdapterFilter.Filt
         val mapFragment = supportFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
         mapFragment.getMapAsync(this)
     }
+
     private fun markerMap() {
         if (!mapReady || !mapLayoutReady) {
             // Peta belum siap atau layout belum terjadi, kembalikan saja
@@ -254,21 +256,14 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, AdapterFilter.Filt
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onFilterClicked(type: String) {
-
-        if (backupOfBencana.isNotEmpty()) {
-            if (type == "all") {
+        viewModel.filterTypeDisaster(backupOfBencana, type)
+        lifecycleScope.launch {
+            viewModel.filteredBencanaList.collect {
                 listOfBencana.clear()
-                listOfBencana.addAll(backupOfBencana)
-            } else {
-                listOfBencana.clear()
-                for (bencana in backupOfBencana) {
-                    if (bencana.title == type) {
-                        listOfBencana.add(bencana)
-                    }
-                }
+                listOfBencana.addAll(it)
+                adapterBencana.notifyDataSetChanged()
+                markerMap()
             }
-            adapterBencana.notifyDataSetChanged()
-            markerMap()
         }
     }
 
