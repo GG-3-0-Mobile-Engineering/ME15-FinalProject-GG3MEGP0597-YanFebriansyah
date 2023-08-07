@@ -8,10 +8,12 @@ import androidx.lifecycle.viewModelScope
 import com.example.finalproject.domain.repository.DisasterRepository
 import com.example.finalproject.domain.usecase.FilterDisasterUseCase
 import com.example.finalproject.domain.usecase.GetDisasterUseCase
+import com.example.finalproject.domain.usecase.SearchDisasterUseCase
 import com.example.finalproject.presentation.model.Bencana
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -22,9 +24,9 @@ import javax.inject.Inject
 class HomeViewModel @Inject constructor(
     private val useCase: GetDisasterUseCase,
     private val filterDisasterUseCase: FilterDisasterUseCase,
+    private val searchDisasterUseCase: SearchDisasterUseCase,
     private val repository: DisasterRepository
 ) : ViewModel() {
-
 
     private val _filteredBencanaList = MutableStateFlow<List<Bencana>>(emptyList())
     val filteredBencanaList: StateFlow<List<Bencana>> = _filteredBencanaList
@@ -63,6 +65,14 @@ class HomeViewModel @Inject constructor(
             } catch (e: Exception) {
 //                uiData.value = HomeState(error(e.message.toString()), isLoading = true)
             }
+        }
+    }
+
+
+    fun searchData(keyword: String, allDisaster: List<Bencana>):Flow<List<Bencana>> {
+        return flow {
+            val result = searchDisasterUseCase.invoke(allDisaster, keyword)
+            emit(result)
         }
     }
 }

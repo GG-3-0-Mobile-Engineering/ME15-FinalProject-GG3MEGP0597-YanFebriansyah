@@ -8,7 +8,7 @@ import com.example.finalproject.presentation.model.Bencana
 class GetDisasterUseCase(
     private val repository: DisasterRepository
 ) {
-    suspend fun invoke(periode: String): List<Bencana> {
+    suspend operator fun invoke(periode: String): List<Bencana> {
         val listOfBencana = mutableListOf<Bencana>()
         val response = repository.getDisaster(periode)
         if (response.isSuccessful) {

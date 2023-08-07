@@ -36,6 +36,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 
@@ -309,37 +310,16 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, AdapterFilter.Filt
 
     @SuppressLint("NotifyDataSetChanged")
     private fun search(search: String) {
-        if (backupOfBencana.isNotEmpty()) {
-            if (search.isBlank()) {
-                // Jika input pencarian kosong, kembalikan semua data bencana dari backupOfBencana
+        lifecycleScope.launch {
+            viewModel.searchData(search, backupOfBencana).collect{result ->
                 listOfBencana.clear()
-                listOfBencana.addAll(backupOfBencana)
-                adapterBencana.notifyDataSetChanged()
-                markerMap()
-            } else {
-                // Jika input pencarian tidak kosong, filter daftar bencana berdasarkan input pencarian
-                val searchLowerCase = search.toLowerCase()
-//                konversi nama provinsi menjadi kode area
-                val codeArea = Constants.provinceMap.entries.find { entry ->
-                    entry.key.toLowerCase() == searchLowerCase
-                }?.value
-                val filteredList = if (codeArea != null) {
-                    // Jika kode area tidak null, filter berdasarkan kode area
-                    backupOfBencana.filter { bencana ->
-                        bencana.codeArea.equals(codeArea, ignoreCase = true)
-                    }
-                } else {
-                    // Jika kode area null, filter berdasarkan nama bencana (title)
-                    backupOfBencana.filter { bencana ->
-                        bencana.title!!.toLowerCase().contains(searchLowerCase)
-                    }
-                }
-                listOfBencana.clear()
-                listOfBencana.addAll(filteredList)
+                listOfBencana.addAll(result)
                 adapterBencana.notifyDataSetChanged()
                 markerMap()
             }
         }
+
+
     }
 
     override fun onResume() {
