@@ -9,10 +9,12 @@ import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
+
+
+
 class FilterDisasterUseCase @Inject constructor(
     private val repository: DisasterRepository
 ) {
-
     operator fun invoke(bencana: List<Bencana>, type: String): Flow<List<Bencana>> {
         return flow {
             val listOfBencana = mutableListOf<Bencana>()

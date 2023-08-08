@@ -74,7 +74,9 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, AdapterFilter.Filt
             val timePickerHelper = TimePickerHelper(this)
             timePickerHelper.showTimePeriodPicker { selectedWeeks ->
                 // Panggil fungsi untuk mengambil data dari service dengan time periode yang dipilih
+
                 viewModel.getData(selectedWeeks.toString())
+
                 observeData()
             }
         }
@@ -237,6 +239,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, AdapterFilter.Filt
                 val dataBencana = data.disasterData
                 if (dataBencana.isNotEmpty()) {
                     listOfBencana.clear()
+                    backupOfBencana.clear()
                     listOfBencana.addAll(dataBencana)
                     backupOfBencana.addAll(dataBencana)
                     adapterBencana.notifyDataSetChanged()
@@ -313,7 +316,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, AdapterFilter.Filt
                 markerMap()
             }
         }
-
 
     }
 

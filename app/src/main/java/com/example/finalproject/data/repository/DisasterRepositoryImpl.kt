@@ -17,6 +17,4 @@ class DisasterRepositoryImpl @Inject constructor(
     override suspend fun getDisaster(periode: String): Response<ResponseData> {
         return apiService.getReport(periode)
     }
-
-
 }
