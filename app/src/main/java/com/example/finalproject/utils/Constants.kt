@@ -3,9 +3,6 @@ package com.example.finalproject.utils
 object Constants {
     const val BASE_URL = "https://data.petabencana.id/"
 
-
-
-
     val provinceMap = mapOf(
         "aceh" to "ID-AC",
         "bali" to "ID-BA",

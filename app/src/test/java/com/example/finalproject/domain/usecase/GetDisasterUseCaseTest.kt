@@ -9,7 +9,6 @@ import org.junit.Test
 
 class GetDisasterUseCaseTest {
 
-
     private lateinit var getDisasterUseCase: GetDisasterUseCase
     private lateinit var fakeDisasterRepositoy: FakeDisasterRepositoy
 
@@ -17,7 +16,6 @@ class GetDisasterUseCaseTest {
     fun setUp() {
         fakeDisasterRepositoy = FakeDisasterRepositoy()
         getDisasterUseCase = GetDisasterUseCase(fakeDisasterRepositoy)
-
     }
 
     @Test

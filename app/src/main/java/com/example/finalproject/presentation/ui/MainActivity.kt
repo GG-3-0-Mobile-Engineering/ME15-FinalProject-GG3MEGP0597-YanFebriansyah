@@ -2,24 +2,20 @@ package com.example.finalproject.presentation.ui
 
 import TimePickerHelper
 import android.annotation.SuppressLint
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.view.ViewTreeObserver
 import android.view.inputmethod.EditorInfo
 import android.widget.ArrayAdapter
-import android.widget.SearchView
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.finalproject.R
-import com.example.finalproject.data.notification.NotificationFloodDepth
 import com.example.finalproject.databinding.ActivityMainBinding
 import com.example.finalproject.presentation.model.Bencana
 import com.example.finalproject.presentation.ui.adapter.AdapterBencana
@@ -37,8 +33,6 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.textfield.MaterialAutoCompleteTextView
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 

@@ -1,6 +1,5 @@
 package com.example.finalproject.domain.usecase
 
-import com.example.finalproject.domain.repository.DisasterRepository
 import com.example.finalproject.presentation.model.Bencana
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

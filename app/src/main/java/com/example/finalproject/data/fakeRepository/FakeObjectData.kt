@@ -59,3 +59,40 @@ object FakeData {
 
     val fakeBencanaList: List<Bencana>? = fakeResponseData.getGeometriesAsBencanaProperties()
 }
+
+
+
+object FakeBencana{
+    val fakeBencana = listOf<Bencana>(
+        Bencana(
+            title = "flood",
+            description = "flood",
+            image = "http://image2.com",
+            codeArea = "ID-JT",
+            latitude = 2.43,
+            longitude = 2.43,
+            floodDepth = 12,
+            time = "2021-01-01"
+        ),
+        Bencana(
+            title = "wind",
+            description = "wind",
+            image = "http://image1.com",
+            codeArea = "ID-JK",
+            latitude = 2.43,
+            longitude = 2.43,
+            floodDepth = 12,
+            time = "2021-01-01"
+        ),
+        Bencana(
+            title = "haze",
+            description = "haze",
+            image = "http://image3.com",
+            codeArea = "ID-JB",
+            latitude = 2.43,
+            longitude = 2.43,
+            floodDepth = 12,
+            time = "2021-01-01"
+        ),
+    )
+}
