@@ -65,5 +65,4 @@ class DisasterRepositoryImplTest {
             assert(result.errorBody() != null)
         }
     }
-
 }
