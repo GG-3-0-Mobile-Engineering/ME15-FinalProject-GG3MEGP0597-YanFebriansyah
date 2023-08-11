@@ -6,6 +6,7 @@ import com.example.finalproject.data.model.ResponseData
 import com.example.finalproject.data.model.Result
 import com.example.finalproject.domain.repository.DisasterRepository
 import kotlinx.coroutines.runBlocking
+import okhttp3.ResponseBody.Companion.toResponseBody
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
@@ -36,7 +37,7 @@ class DisasterRepositoryImplTest {
             `when`(mockApiService.getReport("26135")).thenReturn(mockResponse)
 
             // Call the repository method
-            val result = disasterRepository.getDisaster("26133")
+            val result = disasterRepository.getDisaster("26135")
 
             // Verify the result
             assert(result.isSuccessful)
@@ -44,9 +45,25 @@ class DisasterRepositoryImplTest {
             assert(result.body()?.result != null)
         }
     }
-
     private fun mockResponseWithData(): Response<ResponseData> {
         val responseData = FakeData.fakeResponseData
         return Response.success(responseData)
     }
+
+    @Test
+    fun `test getDisaster failure`() {
+        runBlocking {
+            // Mocking the ApiService response to be a failed response
+            val mockResponse: Response<ResponseData> = Response.error(500, "".toResponseBody())
+            `when`(mockApiService.getReport("23424")).thenReturn(mockResponse)
+
+            // Call the repository method
+            val result = disasterRepository.getDisaster("23424")
+
+            // Verify the result
+            assert(!result.isSuccessful)
+            assert(result.errorBody() != null)
+        }
+    }
+
 }
