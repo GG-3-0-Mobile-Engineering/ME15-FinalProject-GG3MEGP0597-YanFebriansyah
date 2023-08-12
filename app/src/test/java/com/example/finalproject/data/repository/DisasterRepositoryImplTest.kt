@@ -3,7 +3,6 @@ package com.example.finalproject.data.repository
 import com.example.finalproject.data.ApiService
 import com.example.finalproject.data.fakeRepository.FakeData
 import com.example.finalproject.data.model.ResponseData
-import com.example.finalproject.data.model.Result
 import com.example.finalproject.domain.repository.DisasterRepository
 import kotlinx.coroutines.runBlocking
 import okhttp3.ResponseBody.Companion.toResponseBody

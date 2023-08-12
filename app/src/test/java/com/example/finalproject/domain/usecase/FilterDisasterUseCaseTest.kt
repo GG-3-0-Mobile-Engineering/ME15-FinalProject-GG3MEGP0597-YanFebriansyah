@@ -1,8 +1,6 @@
 package com.example.finalproject.domain.usecase
 
 import com.example.finalproject.data.fakeRepository.FakeBencana
-import com.example.finalproject.data.fakeRepository.FakeDisasterRepositoy
-import com.example.finalproject.presentation.model.Bencana
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking

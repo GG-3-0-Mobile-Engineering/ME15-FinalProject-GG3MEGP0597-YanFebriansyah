@@ -11,12 +11,15 @@ import com.example.finalproject.domain.usecase.NotificationUseCase
 import com.example.finalproject.domain.usecase.SearchDisasterUseCase
 import com.example.finalproject.presentation.model.Bencana
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
@@ -29,9 +32,6 @@ class HomeViewModel @Inject constructor(
     private val _filteredBencanaList = MutableStateFlow<List<Bencana>>(emptyList())
     val filteredBencanaList: StateFlow<List<Bencana>> = _filteredBencanaList
 
-
-    private val getDisaster = MutableStateFlow<List<Bencana>>(emptyList())
-    val _getDisaster: StateFlow<List<Bencana>> = getDisaster
 
     private val uiData = MutableLiveData<HomeState>(HomeState(isLoading = true))
     val getData: LiveData<HomeState>
