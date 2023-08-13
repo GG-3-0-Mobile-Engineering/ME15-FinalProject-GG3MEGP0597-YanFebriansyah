@@ -35,7 +35,7 @@ https://docs.petabencana.id/routes/pemantauan-tma
 
 ## Test Report
 
-You can view the test report as a web page by clicking <a href="./htmlReport/index.html" target="_blank">here</a>.
+You can view the test report  page 
 
 
 
