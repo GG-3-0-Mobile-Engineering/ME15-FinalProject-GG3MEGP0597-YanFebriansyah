@@ -1,0 +1,130 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > HomeViewModel_Factory</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.example.finalproject.presentation.viewmodel</a>
+</div>
+
+<h1>Coverage Summary for Class: HomeViewModel_Factory (com.example.finalproject.presentation.viewmodel)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+</tr>
+<tr>
+  <td class="name">HomeViewModel_Factory</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.example.finalproject.presentation.viewmodel;
+&nbsp;
+&nbsp;import com.example.finalproject.domain.usecase.FilterDisasterUseCase;
+&nbsp;import com.example.finalproject.domain.usecase.GetDisasterUseCase;
+&nbsp;import com.example.finalproject.domain.usecase.NotificationUseCase;
+&nbsp;import com.example.finalproject.domain.usecase.SearchDisasterUseCase;
+&nbsp;import dagger.internal.DaggerGenerated;
+&nbsp;import dagger.internal.Factory;
+&nbsp;import dagger.internal.QualifierMetadata;
+&nbsp;import dagger.internal.ScopeMetadata;
+&nbsp;import javax.annotation.processing.Generated;
+&nbsp;import javax.inject.Provider;
+&nbsp;
+&nbsp;@ScopeMetadata
+&nbsp;@QualifierMetadata
+&nbsp;@DaggerGenerated
+&nbsp;@Generated(
+&nbsp;    value = &quot;dagger.internal.codegen.ComponentProcessor&quot;,
+&nbsp;    comments = &quot;https://dagger.dev&quot;
+&nbsp;)
+&nbsp;@SuppressWarnings({
+&nbsp;    &quot;unchecked&quot;,
+&nbsp;    &quot;rawtypes&quot;,
+&nbsp;    &quot;KotlinInternal&quot;,
+&nbsp;    &quot;KotlinInternalInJava&quot;
+&nbsp;})
+&nbsp;public final class HomeViewModel_Factory implements Factory&lt;HomeViewModel&gt; {
+&nbsp;  private final Provider&lt;GetDisasterUseCase&gt; useCaseGetProvider;
+&nbsp;
+&nbsp;  private final Provider&lt;FilterDisasterUseCase&gt; filterDisasterUseCaseProvider;
+&nbsp;
+&nbsp;  private final Provider&lt;SearchDisasterUseCase&gt; searchDisasterUseCaseProvider;
+&nbsp;
+&nbsp;  private final Provider&lt;NotificationUseCase&gt; notificationUseCaseProvider;
+&nbsp;
+&nbsp;  public HomeViewModel_Factory(Provider&lt;GetDisasterUseCase&gt; useCaseGetProvider,
+&nbsp;      Provider&lt;FilterDisasterUseCase&gt; filterDisasterUseCaseProvider,
+&nbsp;      Provider&lt;SearchDisasterUseCase&gt; searchDisasterUseCaseProvider,
+&nbsp;      Provider&lt;NotificationUseCase&gt; notificationUseCaseProvider) {
+&nbsp;    this.useCaseGetProvider = useCaseGetProvider;
+&nbsp;    this.filterDisasterUseCaseProvider = filterDisasterUseCaseProvider;
+&nbsp;    this.searchDisasterUseCaseProvider = searchDisasterUseCaseProvider;
+&nbsp;    this.notificationUseCaseProvider = notificationUseCaseProvider;
+&nbsp;  }
+&nbsp;
+&nbsp;  @Override
+&nbsp;  public HomeViewModel get() {
+&nbsp;    return newInstance(useCaseGetProvider.get(), filterDisasterUseCaseProvider.get(), searchDisasterUseCaseProvider.get(), notificationUseCaseProvider.get());
+&nbsp;  }
+&nbsp;
+&nbsp;  public static HomeViewModel_Factory create(Provider&lt;GetDisasterUseCase&gt; useCaseGetProvider,
+&nbsp;      Provider&lt;FilterDisasterUseCase&gt; filterDisasterUseCaseProvider,
+&nbsp;      Provider&lt;SearchDisasterUseCase&gt; searchDisasterUseCaseProvider,
+&nbsp;      Provider&lt;NotificationUseCase&gt; notificationUseCaseProvider) {
+&nbsp;    return new HomeViewModel_Factory(useCaseGetProvider, filterDisasterUseCaseProvider, searchDisasterUseCaseProvider, notificationUseCaseProvider);
+&nbsp;  }
+&nbsp;
+&nbsp;  public static HomeViewModel newInstance(GetDisasterUseCase useCaseGet,
+&nbsp;      FilterDisasterUseCase filterDisasterUseCase, SearchDisasterUseCase searchDisasterUseCase,
+&nbsp;      NotificationUseCase notificationUseCase) {
+&nbsp;    return new HomeViewModel(useCaseGet, filterDisasterUseCase, searchDisasterUseCase, notificationUseCase);
+&nbsp;  }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-13 11:18</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,221 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > AdapterFilter</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.example.finalproject.presentation.ui.adapter</a>
+</div>
+
+<h1>Coverage Summary for Class: AdapterFilter (com.example.finalproject.presentation.ui.adapter)</h1>
+
+<table class="coverageStats">
+
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">AdapterFilter</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/5)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/27)
+  </span>
+</td>
+</tr>
+  <tr>
+    <td class="name">AdapterFilter$FilterClickListener</td>
+  </tr>
+  <tr>
+    <td class="name">AdapterFilter$ViewHolder</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/4)
+  </span>
+</td>
+  </tr>
+<tr>
+  <td class="name"><strong>Total</strong></td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/6)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    0%
+  </span>
+  <span class="absValue">
+    (0/31)
+  </span>
+</td>
+</tr>
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.example.finalproject.presentation.ui.adapter
+&nbsp;
+&nbsp;import android.annotation.SuppressLint
+&nbsp;import android.content.Context
+&nbsp;import android.graphics.Color
+&nbsp;import android.util.TypedValue
+&nbsp;import android.view.ContextThemeWrapper
+&nbsp;import android.view.LayoutInflater
+&nbsp;import android.view.View
+&nbsp;import android.view.ViewGroup
+&nbsp;import android.widget.ImageView
+&nbsp;import android.widget.TextView
+&nbsp;import android.widget.Toast
+&nbsp;import androidx.constraintlayout.widget.ConstraintLayout
+&nbsp;import androidx.core.content.ContextCompat
+&nbsp;import androidx.recyclerview.widget.RecyclerView
+&nbsp;import com.example.finalproject.R
+&nbsp;
+&nbsp;class AdapterFilter(
+<b class="nc">&nbsp;    private val onFilterListener: FilterClickListener</b>
+<b class="nc">&nbsp;) : RecyclerView.Adapter&lt;AdapterFilter.ViewHolder&gt;() {</b>
+&nbsp;
+&nbsp;    private var selectedPosition = 0
+&nbsp;
+<b class="nc">&nbsp;    val listFilter = listOf&lt;String&gt;(</b>
+<b class="nc">&nbsp;        &quot;all&quot;, &quot;flood&quot;, &quot;wind&quot;, &quot;haze&quot;, &quot;earthquake&quot;, &quot;fire&quot;, &quot;volcano&quot;</b>
+&nbsp;    )
+&nbsp;
+&nbsp;
+<b class="nc">&nbsp;    class ViewHolder(item: View) : RecyclerView.ViewHolder(item) {</b>
+<b class="nc">&nbsp;        val icFilter: ImageView = item.findViewById(R.id.img_ic_add)</b>
+<b class="nc">&nbsp;        val layout: ConstraintLayout = item.findViewById(R.id.constraint_filter)</b>
+<b class="nc">&nbsp;        val textBencana: TextView = item.findViewById(R.id.tv_ket_filter)</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdapterFilter.ViewHolder {
+<b class="nc">&nbsp;        val view: View = LayoutInflater.from(parent.context).inflate(</b>
+<b class="nc">&nbsp;            R.layout.item_filter_disaster, parent, false</b>
+&nbsp;        )
+<b class="nc">&nbsp;        return ViewHolder(view)</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    @SuppressLint(&quot;NotifyDataSetChanged&quot;)
+&nbsp;    override fun onBindViewHolder(
+&nbsp;        holder: AdapterFilter.ViewHolder,
+&nbsp;        @SuppressLint(&quot;RecyclerView&quot;) position: Int
+&nbsp;    ) {
+<b class="nc">&nbsp;        val filter = listFilter[position]</b>
+&nbsp;
+<b class="nc">&nbsp;        holder.textBencana.text = filter</b>
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;//    set warna clickt  mengikuti theme
+<b class="nc">&nbsp;        if (position == selectedPosition) {</b>
+<b class="nc">&nbsp;            holder.textBencana.setTextColor(Color.WHITE)</b>
+<b class="nc">&nbsp;            holder.icFilter.setImageResource(R.drawable.baseline_add_24_white)</b>
+<b class="nc">&nbsp;            holder.layout.setBackgroundResource(R.drawable.shape_botton_filter_green)</b>
+&nbsp;        }else{
+<b class="nc">&nbsp;            val context = holder.itemView.context</b>
+<b class="nc">&nbsp;            val theme = context.theme</b>
+<b class="nc">&nbsp;            val typedValue = TypedValue()</b>
+<b class="nc">&nbsp;            theme.resolveAttribute(com.google.android.material.R.attr.colorOnPrimary, typedValue, true)</b>
+<b class="nc">&nbsp;            val colorOnPrimary = typedValue.data</b>
+<b class="nc">&nbsp;            holder.textBencana.setTextColor(colorOnPrimary)</b>
+<b class="nc">&nbsp;            holder.icFilter.setImageResource(R.drawable.baseline_add_black)</b>
+<b class="nc">&nbsp;            holder.layout.setBackgroundResource(R.drawable.shape_botton_filter_white)</b>
+&nbsp;        }
+&nbsp;
+<b class="nc">&nbsp;        holder.itemView.setOnClickListener {</b>
+<b class="nc">&nbsp;            if (selectedPosition != position) {</b>
+<b class="nc">&nbsp;                selectedPosition = position</b>
+&nbsp;
+<b class="nc">&nbsp;                onFilterListener.onFilterClicked(filter)</b>
+<b class="nc">&nbsp;                notifyDataSetChanged()</b>
+&nbsp;            }
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;
+&nbsp;    override fun getItemCount(): Int {
+<b class="nc">&nbsp;        return listFilter.size</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    interface FilterClickListener {
+&nbsp;        fun onFilterClicked(type: String)
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-13 11:18</div>
+</div>
+</body>
+</html>

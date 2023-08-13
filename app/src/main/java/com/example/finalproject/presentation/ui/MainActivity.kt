@@ -68,9 +68,7 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, AdapterFilter.Filt
             val timePickerHelper = TimePickerHelper(this)
             timePickerHelper.showTimePeriodPicker { selectedWeeks ->
                 // Panggil fungsi untuk mengambil data dari service dengan time periode yang dipilih
-
                 viewModel.getData(selectedWeeks.toString())
-
                 observeData()
             }
         }
@@ -190,7 +188,6 @@ class MainActivity : AppCompatActivity(), OnMapReadyCallback, AdapterFilter.Filt
                     else -> {
                         binding.appbar.bottomAppbar.visibility = View.GONE
                         binding.sheet.visibility = View.VISIBLE
-
                     }
                 }
             }

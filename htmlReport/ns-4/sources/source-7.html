@@ -1,0 +1,186 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <title>Coverage Report > ResponseDataKt</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">com.example.finalproject.data.model</a>
+</div>
+
+<h1>Coverage Summary for Class: ResponseDataKt (com.example.finalproject.data.model)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">ResponseDataKt</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (10/10)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package com.example.finalproject.data.model
+&nbsp;
+&nbsp;import com.example.finalproject.presentation.model.Bencana
+&nbsp;import com.google.gson.annotations.SerializedName
+&nbsp;
+&nbsp;data class ResponseData(
+&nbsp;    @SerializedName(&quot;statusCode&quot;) val statusCode: Int, @SerializedName(&quot;result&quot;) val result: Result
+&nbsp;)
+&nbsp;
+&nbsp;data class Result(
+&nbsp;    @SerializedName(&quot;type&quot;) val type: String,
+&nbsp;    @SerializedName(&quot;objects&quot;) val objects: Objects,
+&nbsp;    @SerializedName(&quot;arcs&quot;) val arcs: List&lt;Any&gt;,
+&nbsp;    @SerializedName(&quot;bbox&quot;) val bbox: List&lt;Double&gt;
+&nbsp;)
+&nbsp;
+&nbsp;data class Objects(
+&nbsp;    @SerializedName(&quot;output&quot;) val output: Output
+&nbsp;)
+&nbsp;
+&nbsp;data class Output(
+&nbsp;    @SerializedName(&quot;type&quot;) val type: String,
+&nbsp;    @SerializedName(&quot;geometries&quot;) val geometries: List&lt;Geometries&gt;
+&nbsp;)
+&nbsp;
+&nbsp;data class Geometries(
+&nbsp;    @SerializedName(&quot;type&quot;) val type: String,
+&nbsp;    @SerializedName(&quot;properties&quot;) val properties: Properties,
+&nbsp;    @SerializedName(&quot;coordinates&quot;) val coordinates: List&lt;Double&gt;
+&nbsp;)
+&nbsp;
+&nbsp;data class Properties(
+&nbsp;    @SerializedName(&quot;pkey&quot;) val pkey: String,
+&nbsp;    @SerializedName(&quot;created_at&quot;) val createdAt: String,
+&nbsp;    @SerializedName(&quot;source&quot;) val source: String,
+&nbsp;    @SerializedName(&quot;status&quot;) val status: String,
+&nbsp;    @SerializedName(&quot;url&quot;) val url: String,
+&nbsp;    @SerializedName(&quot;image_url&quot;) val imageUrl: String?,
+&nbsp;    @SerializedName(&quot;disaster_type&quot;) val disasterType: String,
+&nbsp;    @SerializedName(&quot;report_data&quot;) val reportData: ReportData,
+&nbsp;    @SerializedName(&quot;tags&quot;) val tags: Tags,
+&nbsp;    @SerializedName(&quot;title&quot;) val title: String?,
+&nbsp;    @SerializedName(&quot;text&quot;) val text: String,
+&nbsp;    @SerializedName(&quot;partner_code&quot;) val partnerCode: String?,
+&nbsp;    @SerializedName(&quot;partner_icon&quot;) val partnerIcon: String?
+&nbsp;)
+&nbsp;
+&nbsp;data class ReportData(
+&nbsp;    @SerializedName(&quot;report_type&quot;) val reportType: String,
+&nbsp;    @SerializedName(&quot;flood_depth&quot;) val floodDepth: Int?,
+&nbsp;    @SerializedName(&quot;impact&quot;) val impact: Int?,
+&nbsp;    @SerializedName(&quot;visibility&quot;) val visibility: Int?,
+&nbsp;    @SerializedName(&quot;airQuality&quot;) val airQuality: Int?,
+&nbsp;    @SerializedName(&quot;structureFailure&quot;) val structureFailure: Int?,
+&nbsp;    @SerializedName(&quot;accessabilityFailure&quot;) val accessabilityFailure: Int?,
+&nbsp;    @SerializedName(&quot;condition&quot;) val condition: Int?
+&nbsp;)
+&nbsp;
+&nbsp;data class Tags(
+&nbsp;    @SerializedName(&quot;district_id&quot;) val districtId: String?,
+&nbsp;    @SerializedName(&quot;region_code&quot;) val regionCode: String,
+&nbsp;    @SerializedName(&quot;local_area_id&quot;) val localAreaId: String?,
+&nbsp;    @SerializedName(&quot;instance_region_code&quot;) val instanceRegionCode: String
+&nbsp;)
+&nbsp;
+&nbsp;fun ResponseData.getGeometriesAsBencanaProperties(): List&lt;Bencana&gt;? {
+<b class="fc">&nbsp;    return this.result.objects.output.geometries?.map { geometries -&gt;</b>
+<b class="fc">&nbsp;        Bencana(</b>
+<b class="fc">&nbsp;            image = geometries.properties.imageUrl,</b>
+<b class="fc">&nbsp;            title = geometries.properties.disasterType,</b>
+<b class="fc">&nbsp;            description = geometries.properties.status,</b>
+<b class="fc">&nbsp;            latitude = geometries.coordinates[1],</b>
+<b class="fc">&nbsp;            longitude = geometries.coordinates[0],</b>
+<b class="fc">&nbsp;            codeArea = geometries.properties.tags.instanceRegionCode,</b>
+<b class="fc">&nbsp;            floodDepth = geometries.properties.reportData.floodDepth,</b>
+<b class="fc">&nbsp;            time = geometries.properties.createdAt</b>
+&nbsp;        )
+&nbsp;    }
+&nbsp;}
+&nbsp;
+&nbsp;
+&nbsp;
+&nbsp;
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-08-13 11:18</div>
+</div>
+</body>
+</html>
