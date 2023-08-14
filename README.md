@@ -35,7 +35,7 @@ https://docs.petabencana.id/routes/pemantauan-tma
 
 ## Test Report
 
-You can view the test report  page [test](repost test.jpg)
+You can view the test report  page [test](./repost%20test.jpg)
 
 
 ## Donload APK
