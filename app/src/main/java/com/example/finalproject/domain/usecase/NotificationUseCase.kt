@@ -13,7 +13,7 @@ class NotificationUseCase @Inject constructor() {
         }
     }
 
-    private suspend fun buildNotificationMessage(bencana: List<Bencana>): String {
+       suspend fun buildNotificationMessage(bencana: List<Bencana>): String {
         val filteredLocations = mutableListOf<String>()
         for (i in bencana) {
             val getDepth = i.floodDepth
