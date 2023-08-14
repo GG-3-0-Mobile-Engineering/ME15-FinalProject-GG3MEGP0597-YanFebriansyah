@@ -72,7 +72,7 @@ fun ResponseData.getGeometriesAsBencanaProperties(): List<Bencana>? {
             latitude = geometries.coordinates[1],
             longitude = geometries.coordinates[0],
             codeArea = geometries.properties.tags.instanceRegionCode,
-            floodDepth = geometries.properties.reportData.floodDepth,
+            floodDepth = geometries.properties.reportData?.floodDepth,
             time = geometries.properties.createdAt
         )
     }

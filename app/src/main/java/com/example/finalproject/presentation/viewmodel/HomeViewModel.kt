@@ -48,7 +48,6 @@ class HomeViewModel @Inject constructor(
             try {
                 uiData.value = HomeState(isLoading = true)
                 val response = useCaseGet.invoke(periode).collect {
-
                     uiData.value = HomeState(it, isLoading = false)
                 }
             } catch (e: Exception) {
