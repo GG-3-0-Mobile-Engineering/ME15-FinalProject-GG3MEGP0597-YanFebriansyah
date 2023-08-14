@@ -19,16 +19,17 @@ https://docs.petabencana.id/routes/pemantauan-tma
 
 ## Test Report
 
-You can view the test report  page [test](./repost%20test.jpg)
+You can view the test report  page [test](./repost%20test.jpg) .
 For unit testing, it hasn't been fully tested yet and the coverage is still below standard test. As for instrumental testing, it's also not completed.
 
 
 
 
-**You can Clone repo with git clone https://github.com/username/repo.git and open new with project from version control in Android studio**
+You can Clone repo with git clone https://github.com/username/repo.git and open new with project from version control in Android studio
 
 ## Donload APK
-Link apk Final Project       : [donload](https://drive.google.com/file/d/1IRQjqox83OwGwz6C4b2ymllOLE5Tt0bz/view?usp=sharing)
-Link demo : [watch](https://youtu.be/gJHts1t_Vm4)
+- Link apk Final Project       : [donload](https://drive.google.com/file/d/1IRQjqox83OwGwz6C4b2ymllOLE5Tt0bz/view?usp=sharing)
+
+- Link demo : [watch](https://youtu.be/gJHts1t_Vm4)
 
 
